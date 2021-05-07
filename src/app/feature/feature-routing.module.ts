@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FeatureComponent} from '../feature/feature.component'
+import { FeatureComponent } from '../feature/feature.component'
 
 const routes: Routes = [
     {
@@ -19,6 +19,34 @@ const routes: Routes = [
                 loadChildren: () =>
                     import('./cases/cases.module').then(
                         (m) => m.CasesModule
+                    ),
+            },
+            {
+                path: 'vaccine',
+                loadChildren: () =>
+                    import('./vaccine/vaccine.module').then(
+                        (m) => m.VaccineModule
+                    ),
+            },
+            {
+                path: 'plasma',
+                loadChildren: () =>
+                    import('./plasma/plasma.module').then(
+                        (m) => m.PlasmaModule
+                    ),
+            },
+            {
+                path: 'oxygen',
+                loadChildren: () =>
+                    import('./oxygen/oxygen.module').then(
+                        (m) => m.OxygenModule
+                    ),
+            },
+            {
+                path: 'contactus',
+                loadChildren: () =>
+                    import('./contact-us/contact-us.module').then(
+                        (m) => m.ContactUsModule
                     ),
             },
         ],

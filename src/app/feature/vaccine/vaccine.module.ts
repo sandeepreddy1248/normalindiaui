@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { VaccineRoutingModule } from './vaccine-routing.module';
+import { VaccineComponent } from './vaccine.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [VaccineComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    VaccineRoutingModule
   ]
 })
 export class VaccineModule { }

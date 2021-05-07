@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { PlasmaRoutingModule } from './plasma-routing.module';
+import { PlasmaComponent } from './plasma.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [PlasmaComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    PlasmaRoutingModule
   ]
 })
 export class PlasmaModule { }
