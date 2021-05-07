@@ -4,10 +4,27 @@ import { LayoutComponent } from './block/layout/layout/layout.component';
 
 
 const routes: Routes = [
+  // {
+  //   path: "",
+  //   pathMatch: "full",
+  //   component: LayoutComponent,
+  // },
   {
-    path: "",
-    pathMatch: "full",
+    path: '',
     component: LayoutComponent,
+    children: [
+      // {
+      //   path: RedirectRoutes.DASHBOARD,
+      //   component: DashboardComponent,
+      //   canActivate: [AuthGuard],
+      // },
+
+      {
+        path: '',
+        loadChildren: () =>
+          import('./feature/feature.module').then((m) => m.FeatureModule),
+      },
+    ],
   }
 ];
 

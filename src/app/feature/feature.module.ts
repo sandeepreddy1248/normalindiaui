@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FeatureRoutingModule } from '../feature/feature-routing.module';
+import { FeatureComponent } from '../feature/feature.component'
 @NgModule({
-  declarations: [],
+  declarations: [FeatureComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    FeatureRoutingModule
   ]
 })
 export class FeatureModule { }
+

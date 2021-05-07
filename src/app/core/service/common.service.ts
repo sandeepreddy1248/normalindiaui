@@ -12,7 +12,7 @@ export class CommonService {
 
   constructor(private apiService: ApiService,
     private appService: AppService,
-    private alertService:AlertService) { }
+    private alertService: AlertService) { }
 
   apiHandler(methodType, url, requestObj) {
     switch (methodType) {
@@ -31,20 +31,26 @@ export class CommonService {
     // this.spinner.show();
     this.apiHandler(methodType, url, requestObj).subscribe(
       (res) => {
-        if (
-          !this.appService.checkNullOrUndefined(res) &&
-          res.hasOwnProperty('response')
-        ) {
-          if (res.hasOwnProperty('isSuccess') && res.isSuccess) {
-            this.getMessages(res, AlertInfo.SUCCESS, methodType);
+        // if (
+        //   !this.appService.checkNullOrUndefined(res) &&
+        //   res.hasOwnProperty('response')
+        // ) {
+        //   if (res.hasOwnProperty('isSuccess') && res.isSuccess) {
+        //     this.getMessages(res, AlertInfo.SUCCESS, methodType);
 
-            callBack(res.response, true);
-          } else if (res.hasOwnProperty('isSuccess') && !res.isSuccess) {
-            this.getMessages(res, AlertInfo.ERROR, methodType);
-            // this.spinner.hide();
-            callBack(res.response, false);
-          }
+        //     callBack(res.response, true);
+        //   } else if (res.hasOwnProperty('isSuccess') && !res.isSuccess) {
+        //     this.getMessages(res, AlertInfo.ERROR, methodType);
+        //     // this.spinner.hide();
+        //     callBack(res.response, false);
+        //   }
+        // }
+        if (!this.appService.checkNullOrUndefined(res)) {
+          callBack(res, true)
+        } else {
+          callBack(res, false)
         }
+
       },
       (error) => {
         // this.spinner.hide();

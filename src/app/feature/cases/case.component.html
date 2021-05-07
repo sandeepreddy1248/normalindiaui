@@ -1,0 +1,79 @@
+<div class="container">
+    <h2 class="text-center">
+      <span class="text-danger">Covid cases</span> India Tracking
+    </h2>
+    <br />
+    <div class="card mainCard">
+      <div class="card-body">
+        <div class="row">
+          <div class="mainCardItems text-danger">
+            <small>Confirmed</small>
+            <p>{{ confirmCasesCount |number : '1.0-0' }}</p>
+            <small>Today: {{todayConfirmedCases | number}}</small>
+          </div>
+          <div class="mainCardItems text-primary">
+            <small>Active</small>
+            <p>{{confirmCasesCount - recoveredCount - diedCount | number}}</p>
+          </div>
+          <div class="mainCardItems text-success">
+            <small>Recovered</small>
+            <p>{{recoveredCount | number}}</p>
+            <small>Today: {{todayRecoveredCases | number}}</small>
+          </div>
+          <div class="mainCardItems text-dark">
+            <small>Deceased</small>
+            <p>{{diedCount | number}}</p>
+            <small>Today: {{todayDiedCases | number}}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="table_data">
+      <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+          <tr class="text-center">
+            <th>State/UT</th>
+            <th>Confirmed</th>
+            <th>Active</th>
+            <th>Recovered</th>
+            <th>Deceased</th>
+            <th>Tested</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let state of statesInfo" (click)="stateData(state.stateShotCode)">
+            <td class="text-center">{{state.stateName}}</td>
+            <td class="text-center">
+              <div *ngIf="state.todayConfirmed">
+                <i class="fa fa-arrow-up" style="color: red;"></i> {{state.todayConfirmed}}
+              </div>
+              <div>
+              {{state.confirmedCases | number}} 
+            </div></td>
+            <td class="text-center">{{state.confirmedCases - state.recoveredCases - state.deceasedCases | number}}</td>
+            <td class="text-center">
+              <div *ngIf="state.todayRecovered"> 
+                <i class="fa fa-arrow-up" style="color: green;"></i> {{state.todayRecovered | number}}
+              </div>
+             <div> {{state.recoveredCases | number}}</div></td>
+            <td class="text-center">
+              <div *ngIf="state.todayDied"> 
+                <i class="fa fa-arrow-up" style="color: #6c757d"></i> {{state.todayDied | number}}
+              </div>
+              <div>
+              {{state.deceasedCases | number}}</div></td>
+            <td class="text-center">{{state.tested | number}}</td>
+          </tr>
+          <tr class="table-danger">
+            <td class="text-center">Total</td>
+            <td class="text-center">{{confirmCasesCount | number}}</td>
+            <td class="text-center">{{confirmCasesCount - recoveredCount - diedCount | number}}</td>
+            <td class="text-center">{{recoveredCount | number}}</td>
+            <td class="text-center">{{diedCount | number}}</td>
+            <td class="text-center">{{totalTests| number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>

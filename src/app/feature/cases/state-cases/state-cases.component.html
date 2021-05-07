@@ -1,0 +1,81 @@
+<br />
+<div class="container">
+    <p class="text-primary" style="font-size: 25px;">{{stateNamesInIndia[selectedState]}}</p>
+    <div class="card mainCard">
+        <div class="card-body">
+            <div class="row">
+                <div class="mainCardItems text-danger">
+                    <small>Confirmed</small>
+                    <p>{{ssConfirmedCases | number}}</p>
+                </div>
+                <div class="mainCardItems text-primary">
+                    <small>Active</small>
+                    <p>{{ssConfirmedCases - ssRecoveredCases - ssDiedPeople | number}}</p>
+                </div>
+                <div class="mainCardItems text-success">
+                    <small>Recovered</small>
+                    <p>{{ssRecoveredCases | number}}</p>
+                    <!-- <small>Today: {{todayRecoveredCases | number}}</small> -->
+                </div>
+                <div class="mainCardItems text-dark">
+                    <small>Deceased</small>
+                    <p>{{ssDiedPeople | number}}</p>
+                    <!-- <small>Today: {{todayDiedCases | number}}</small> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <p class="text-primary" style="font-size: 25px;">Districts</p>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="table_data">
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th>District</th>
+                            <th>Confirmed</th>
+                            <th>Active</th>
+                            <th>Recovered</th>
+                            <th>Died</th>
+                            <th>Tested</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let dist of selectedStateInfo">
+                            <td class="text-center">{{dist.districtName}} </td>
+                            <td class="text-center">
+                                <div *ngIf="dist.todayConfirmed"> 
+                                    <i class="fa fa-arrow-up" style="color: red;"></i> {{dist.todayConfirmed | number}}
+                                  </div>
+                                  <div>
+                                    {{dist.distConfirmed | number}}
+                                  </div>
+                               </td>
+                            <td class="text-center">{{dist.distConfirmed - dist.distRecovered -dist.distDied | number}}</td>
+                            <td class="text-center">
+                                <div *ngIf="dist.todayRecovered">
+                                    <i class="fa fa-arrow-up" style="color: green"></i> {{dist.todayRecovered | number}}
+                                </div>
+                                <div>{{dist.distRecovered  | number}}</div></td>
+                            <td class="text-center">
+                                <div *ngIf="dist.todayDied">
+                                <i class="fa fa-arrow-up" style="color: #6c757d"></i> {{dist.todayDied | number}}
+                            </div>
+                            <div>{{dist.distDied  | number}}</div></td>
+                            <td class="text-center">{{dist.distTested | number}}</td>
+                        </tr>
+                        <tr class="text-danger">
+                            <td class="text-center">Total</td>
+                            <td class="text-center">{{ssConfirmedCases | number}}</td>
+                            <td class="text-center">{{ssConfirmedCases - ssRecoveredCases - ssDiedPeople | number}}</td>
+                            <td class="text-center">{{ssRecoveredCases | number}}</td>
+                            <td class="text-center">{{ssDiedPeople | number}}</td>
+                            <td class="text-center">{{ssTested | number}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

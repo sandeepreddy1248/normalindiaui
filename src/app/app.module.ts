@@ -8,6 +8,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { LayoutComponent } from './block/layout/layout/layout.component';
+import {FeatureModule} from './feature/feature.module'
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { LayoutComponent } from './block/layout/layout/layout.component';
     HttpClientModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
+    FeatureModule,
+    RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
