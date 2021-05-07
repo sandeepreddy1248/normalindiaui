@@ -3,10 +3,10 @@
         <h1><a href="index.html" class="logo">Ni</a></h1>
         <ul class="list-unstyled components mb-5">
             <li class="active">
-                <a><span class="fa fa-home" routerLink=""></span> Home</a>
+                <a><span class="fa fa-home" routerLink=""></span> check</a>
             </li>
             <li>
-                <a><span class="fa fa-user" routerLink="cases"></span> Covid cases</a>
+                <a><span class="far fa-chart-bar" routerLink="cases"></span> Covid cases</a>
             </li>
             <li>
                 <a><span class="fa fa-sticky-note" routerLink="oxygen"></span> Oxygen</a>
@@ -15,7 +15,7 @@
                 <a><span class="fa fa-first-aid" routerLink="plasma"></span> Plasma</a>
             </li>
             <li>
-                <a><span class="fa fa-user" routerLink="vaccine"></span> vaccine</a> 
+                <a><span class="fa fa-user" routerLink="vaccine"></span> vaccine</a>
             </li>
             <li>
                 <a><span class="fa fa-github" routerLink=""></span> Github</a>
@@ -24,61 +24,29 @@
                 <a><span class="fa fa-paper-plane" routerLink="contactus"></span> Contact us</a>
             </li>
         </ul>
-        <!-- <div class="footer">
-            <p>
+        <div class="footer">
+            <!-- <p>
                 Copyright &copy;
                 <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
                 with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
                     target="_blank">Colorlib.com</a>
-            </p>
-        </div> -->
+            </p> -->
+            <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+                <div class="container text-center">
+                    <small>Copyright &copy; Your Website</small>
+                </div>
+            </footer>
+        </div>
     </nav>
 
     <!-- Page Content  -->
     <div id="content" class="p-4 p-md-5">
 
-        <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
-            <div class="container-fluid">
-                <router-outlet></router-outlet>
-                <!-- <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                    <i class="fa fa-bars"></i>
-                    <span class="sr-only">Toggle Menu</span>
-                </button>
-                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <i class="fa fa-bars"></i>
-                </button> -->
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+           
+        </div>
 
-                <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Portfolio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link">Contact</a>
-                        </li>
-                    </ul>
-                </div> -->
-            </div>
-        <!-- </nav> -->
-        <!-- <h2 class="mb-4">Sidebar #07</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.</p> -->
     </div>
-</div>
 
+</div>

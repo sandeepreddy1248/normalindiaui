@@ -1,6 +1,6 @@
+import { HttpMethod } from './../enums/http-handlers';
 import { AlertService } from './alert.service';
 import { AlertInfo } from './../enums/alert-info';
-import { HttpMethod } from './../../block/http-handlar.enum';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';

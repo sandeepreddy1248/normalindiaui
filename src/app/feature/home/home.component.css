@@ -1,0 +1,16 @@
+.toggle-btn{
+    padding:8px 30px;
+    cursor:pointer;
+    background:transparent;
+    border:0;
+    outline:none;
+    position:relative;
+    }
+
+    .button-box{
+        width:222px;
+        margin:30px auto;
+        position:relative;
+        box-shadow:0 0 20px 5px #8783ff;
+        border-radius:30px;
+        }

@@ -1,6 +1,6 @@
+import { HttpMethod } from './../../../core/enums/http-handlers';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpMethod } from 'src/app/block/http-handlar.enum';
 import { CASE } from 'src/app/core/enums/urls';
 import { CommonService } from 'src/app/core/service/common.service';
 

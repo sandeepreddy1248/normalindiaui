@@ -8325,4 +8325,11 @@
     .btn.btn-primary:hover, .btn.btn-primary:focus {
       background: #3e64ff !important;
       border-color: #3e64ff !important; }
-  
+      #page-content {
+        flex: 1 0 auto;
+      }
+      
+      #sticky-footer {
+        flex-shrink: none;
+      }
+      
