@@ -134,8 +134,10 @@ export class HomeComponent implements OnInit {
       HttpMethod.GET,
       null, (res, statusFlag) => {
         this.spinner.hide();
-        if (statusFlag) {
+        if (statusFlag && res.length) {
           this.listOfHospitals = res;
+        } else {
+          //implement
         }
       }
     );
@@ -180,11 +182,12 @@ export class HomeComponent implements OnInit {
 
   onSelect(event) {
     console.log(event);
-    this.listOfHospitals = [];
+    // this.listOfHospitals = [];
     if (event.id == "tab1") {
-      this.clearStateCountryInputs();
+      this.pinCodeFoucus();
+      // this.clearStateCountryInputs();
     } else {
-      this.clearPincode();
+      // this.clearPincode();
       this.stateFocus();
     }
   }
