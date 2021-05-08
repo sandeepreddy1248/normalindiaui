@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CASE } from 'src/app/core/enums/urls';
 import { CommonService } from 'src/app/core/service/common.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-case',
@@ -59,7 +60,7 @@ export class CaseComponent implements OnInit {
     UT: "Uttarakhand",
     WB: "West Bengal",
   };
-  constructor(private commonService: CommonService,private router: Router) { }
+  constructor(private commonService: CommonService, private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getCases();
@@ -73,7 +74,7 @@ export class CaseComponent implements OnInit {
       url,
       HttpMethod.GET,
       null, (res, statusFlag) => {
-        // this.spinner.hide();
+        this.spinner.hide();
         if (statusFlag) {
           this.allData = res;
           // console.log(this.allData);
@@ -122,7 +123,7 @@ export class CaseComponent implements OnInit {
 
   stateData(stateName) {
     var stateShortCode = stateName.toString();
-   this.router.navigate(["cases/state/", stateShortCode]);
+    this.router.navigate(["cases/state/", stateShortCode]);
   }
 
 }

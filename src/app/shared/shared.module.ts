@@ -3,16 +3,21 @@ import { CommonModule } from '@angular/common';
 
 import { SharedRoutingModule } from './shared-routing.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     SharedRoutingModule,
-    TabsModule
+    TabsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
-    TabsModule
+    TabsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SharedModule { }

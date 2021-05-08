@@ -1,1 +1,64 @@
-<p>home-details works!</p>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+        <form [formGroup]="reportForm">
+      <div class="row">
+        <div class="col-sm-6">
+        <h4>New Report</h4>
+          <div class="form-group">
+            <label for="">My Name</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="form-group">
+            <label for="">Regular Bed</label>
+            <div class="tab-slider--nav">
+              <ul class="tab-slider--tabs" formControlName="regularBed">
+                <li class="tab-slider--trigger" [class.active]="viewRegularBedMode == 'avaliable'" rel="avaliable" (click)="viewRegularBedMode ='avaliable'">Avaliable</li>
+                <li class="tab-slider--trigger" [class.inactive]="viewRegularBedMode == 'notavaliable'" rel="notavaliable" (click)="viewRegularBedMode ='notavaliable'">Not Avaliable</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">ICU Bed</label>
+            <div class="tab-slider--nav">
+              <ul class="tab-slider--tabs" formControlName="icuBed">
+                <li class="tab-slider--trigger" [class.active]="viewICUBedMode == 'avaliable'" rel="avaliable" (click)="viewICUBedMode ='avaliable'">Avaliable</li>
+                <li class="tab-slider--trigger" [class.inactive]="viewICUBedMode == 'notavaliable'" rel="notavaliable" (click)="viewICUBedMode ='notavaliable'">Not Avaliable</li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Oxygen Bed</label>
+            <div class="tab-slider--nav">
+              <ul class="tab-slider--tabs" formControlName="oxygenBed">
+                <li class="tab-slider--trigger" [class.active]="viewOxygenBedMode == 'avaliable'" rel="avaliable" (click)="viewOxygenBedMode ='avaliable'">Avaliable</li>
+                <li class="tab-slider--trigger" [class.inactive]="viewOxygenBedMode == 'notavaliable'" rel="notavaliable" (click)="viewOxygenBedMode ='notavaliable'">Not Avaliable</li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="">Vaccine</label>
+            <div class="tab-slider--nav">
+              <ul class="tab-slider--tabs" formControlName="vaccine">
+                <li class="tab-slider--trigger" [class.active]="viewVaccineBedMode == 'avaliable'" rel="avaliable" (click)="viewVaccineBedMode ='avaliable'">Avaliable</li>
+                <li class="tab-slider--trigger" [class.inactive]="viewVaccineBedMode == 'notavaliable'" rel="notavaliable" (click)="viewVaccineBedMode ='notavaliable'">Not Avaliable</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="">Comment</label>
+            <textarea  type="text" name="comment" class="form-control" formControlName="comment"></textarea>
+          </div>
+      </div>
+    </div>
+        </form>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-primary col-sm-5" (click)="submitReport(reportForm.value)">Done</button>
+      <button type="button" class="btn col-sm-5 ml-2" (click)="resetReport()">Cancel</button>
+    </div>
+    </div>
+  </div>
+</div>

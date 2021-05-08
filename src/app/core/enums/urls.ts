@@ -19,4 +19,10 @@ export const USER = {
 export const CASE = {
     CaseUrl: 'https://api.covid19india.org/v3/data.json',
 }
+export const HOSPITAL = {
+    StateUrl: 'https://cdn-api.co-vin.in/api/v2/admin/location/states',
+    DistrictUrl: ' https://cdn-api.co-vin.in/api/v2/admin/location/districts',
+    HospitalByPinCodeUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitaldatabypin'
+    // '../../../assets/Data/ts.json'
+}
 
