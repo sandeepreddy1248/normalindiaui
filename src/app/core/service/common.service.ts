@@ -4,6 +4,7 @@ import { AlertInfo } from './../enums/alert-info';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { AppService } from './app.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class CommonService {
 
   constructor(private apiService: ApiService,
     private appService: AppService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private spinner: NgxSpinnerService) { }
 
   apiHandler(methodType, url, requestObj) {
     switch (methodType) {
@@ -28,7 +30,7 @@ export class CommonService {
   }
   // common Post Api need to use in all screens
   commonApiCall(url, methodType, requestObj, callBack) {
-    // this.spinner.show();
+    this.spinner.show();
     this.apiHandler(methodType, url, requestObj).subscribe(
       (res) => {
         // if (

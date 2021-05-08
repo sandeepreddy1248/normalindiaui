@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CASE } from 'src/app/core/enums/urls';
 import { CommonService } from 'src/app/core/service/common.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-state-cases',
@@ -11,7 +12,7 @@ import { CommonService } from 'src/app/core/service/common.service';
 })
 export class StateCasesComponent implements OnInit {
 
-  constructor(private activatedRouted: ActivatedRoute, private commonService: CommonService) { }
+  constructor(private activatedRouted: ActivatedRoute, private commonService: CommonService, private spinner: NgxSpinnerService) { }
 
   selectedState: any;
   dummy: any
@@ -70,7 +71,7 @@ export class StateCasesComponent implements OnInit {
       url,
       HttpMethod.GET,
       null, (res, statusFlag) => {
-        // this.spinner.hide();
+         this.spinner.hide();
         if (statusFlag) {
           this.selectedStateData = res[this.selectedState];
           this.ssConfirmedCases = this.selectedStateData['total']['confirmed']
