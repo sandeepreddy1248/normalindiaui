@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-state-cases',
   templateUrl: './state-cases.component.html',
-  styleUrls: ['./state-cases.component.css']
+  styleUrls: ['./state-cases.component.scss']
 })
 export class StateCasesComponent implements OnInit {
 

@@ -1,4 +1,16 @@
+/**** App Global Styles ****/
+@import 'theme';
+@import 'custom_variables';
+
+/**** Vendor Styles ****/
+@import '../../node_modules/font-awesome/scss/font-awesome.scss';
+
+
 /* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #F2F4F7;
+}
+
 .mainCard {
     align-self: center;
     display: flex;

@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-home-details',
   templateUrl: './home-details.component.html',
-  styleUrls: ['./home-details.component.css']
+  styleUrls: ['./home-details.component.scss']
 })
 export class HomeDetailsComponent implements OnInit {
   reportForm: FormGroup;
