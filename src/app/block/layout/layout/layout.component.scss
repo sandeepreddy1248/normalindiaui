@@ -454,7 +454,10 @@
     margin-left: auto; }
     @media (min-width: 576px) {
       .container {
-        max-width: 540px; } }
+        max-width: 540px; 
+      } 
+      
+    }
     @media (min-width: 768px) {
       .container {
         max-width: 720px; } }
@@ -3429,7 +3432,7 @@
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    display: none;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-box-align: center;
@@ -3520,7 +3523,15 @@
     .navbar-expand-sm > .container,
     .navbar-expand-sm > .container-fluid {
       padding-right: 0;
-      padding-left: 0; } }
+      padding-left: 0;
+     } 
+     .navbar {
+       display: flex;
+     }
+     .hospital-details {
+      padding: 4px 20px;
+  }
+    }
   
   @media (min-width: 576px) {
     .navbar-expand-sm {
@@ -4525,7 +4536,17 @@
   .list-group-flush .list-group-item {
     border-right: 0;
     border-left: 0;
-    border-radius: 0; }
+    border-radius: 0;
+  background-color: #3e64ff !important;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 10px;
+    font-size: 15px;
+    text-align: center;
+  }
+  .list-group-flush .list-group-item .fa{
+    font-size: 25px !important;
+  }
     .list-group-flush .list-group-item:last-child {
       margin-bottom: -1px; }
   
@@ -8213,13 +8234,21 @@
     width: 100%; }
   
   #sidebar {
-    min-width: 270px;
-    max-width: 270px;
-    background: #3e64ff;
+    min-width: 80px;
+    max-width: 80px;
+    display: block;
     color: #fff;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s; }
+    font-weight: 900;
+    background: #3e64ff;
+    transition: all 0.3s;
+    padding: 5px;
+    text-align: center;
+    margin: 0;
+   }
+   #sidebar-wrapper {
+    margin-left: 0;
+    background: #3e64ff !important;
+}
     #sidebar.active {
       min-width: 80px;
       max-width: 80px;
@@ -8306,10 +8335,12 @@
       display: none; } }
   
   .footer {
-    padding: 0 30px; }
+       min-height: 6vh;
+    background: #343a40;}
     @media (max-width: 991.98px) {
       .footer {
-        display: none; } }
+        display: block; }
+       }
   
   #content {
     width: 100%;

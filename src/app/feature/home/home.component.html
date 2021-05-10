@@ -67,20 +67,26 @@
     </tabset>
     <div>
         <div fxLayout="column" *ngIf="listOfHospitals.length">
-            <div class="item">
-                <div class="card mt-2" style="width: 50rem;" *ngFor="let hospital of listOfHospitals">
-                    <img class="card-img-top" src="../../../assets/Images/hospital.jpg" style="width:125px;height:125px"
-                        alt="Card image cap" (click)="checkHospitalDetails(hospital.hospital_name)">
-                    <div class="card-body">
-                        <h5 class="card-title" (click)="checkHospitalDetails(hospital.hospital_name)">
-                            {{hospital.hospital_name}}</h5>
-                        <p class="card-text">{{hospital.hospital_phone}}</p>
-                        <p class="card-text">{{hospital.area}}</p>
-                        <p class="card-text">{{hospital.district}}</p>
-                        <p class="card-text">{{hospital.hospital_address}}</p>
-                        <p class="card-text">{{hospital.pincode}}</p>
-                        <a class="btn btn-primary" (click)="checkHospitalDetails(hospital.hospital_name)">Check
-                            Info</a>
+            <div class="item hospital-list card mt-2 p-1">
+                <div class="card mt-2" *ngFor="let hospital of listOfHospitals">
+                    <div class="row">
+                        <div class="col-md-3 align-self-center pr-0">
+                            <div class="hospital-img">
+                                <img class="card-img-top" src="../../../assets/Images/hospital.jpg"
+                            alt="Card image cap" (click)="checkHospitalDetails(hospital.hospital_name)">
+                            </div>
+                        </div>
+                        <div class="col-md-9 pl-0">  
+                            <div class="hospital-details">
+                                <h5 class="card-title mt-1" (click)="checkHospitalDetails(hospital.hospital_name)">
+                                    {{hospital.hospital_name}}  <span class="hospital-contact"> Contact : {{hospital.hospital_phone}}</span></h5>
+                                <p class="card-text mb-1">{{hospital.area}}, {{hospital.district}}</p>
+                                <p class="card-text mb-1">{{hospital.hospital_address}} - {{hospital.pincode}}</p>
+                                <div class="text-right">
+                                    <a class="btn btn-primary text-white" (click)="checkHospitalDetails(hospital.hospital_name)">Check  Info</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
