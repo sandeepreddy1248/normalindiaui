@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+  
   getStates(): any {
     this.commonService.commonApiCall(
       HOSPITAL.StateUrl,
@@ -91,8 +92,8 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  checkHospitalDetails(hospName) {
-    this.router.navigate(['/hospitainfo/', hospName]);
+  checkHospitalDetails(hospital_id) {
+    this.router.navigate(['/hospitainfo/', hospital_id]);
   }
 
   search(type?) {

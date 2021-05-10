@@ -72,18 +72,32 @@
                     <div class="row">
                         <div class="col-md-3 align-self-center pr-0">
                             <div class="hospital-img">
-                                <img class="card-img-top" src="../../../assets/Images/hospital.jpg"
-                            alt="Card image cap" (click)="checkHospitalDetails(hospital.hospital_name)">
+                                <img class="card-img-top" src="../../../assets/Images/hospital.jpg" alt="Card image cap"
+                                    (click)="checkHospitalDetails(hospital.hospital_id)">
                             </div>
                         </div>
-                        <div class="col-md-9 pl-0">  
+                        <div class="col-md-9 pl-0">
                             <div class="hospital-details">
-                                <h5 class="card-title mt-1" (click)="checkHospitalDetails(hospital.hospital_name)">
-                                    {{hospital.hospital_name}}  <span class="hospital-contact"> Contact : {{hospital.hospital_phone}}</span></h5>
+                                <h5 class="card-title mt-1" (click)="checkHospitalDetails(hospital.hospital_id)">
+                                    {{hospital.hospital_name}} <span class="hospital-contact"> Contact :
+                                        {{hospital.hospital_phone}}</span></h5>
                                 <p class="card-text mb-1">{{hospital.area}}, {{hospital.district}}</p>
-                                <p class="card-text mb-1">{{hospital.hospital_address}} - {{hospital.pincode}}</p>
+                                <ng-container
+                                    *ngIf="hospital?.org?.report?.information && hospital?.org?.report?.information.length">
+                                    <div class="available-beds ml-2"
+                                        *ngFor="let info of hospital?.org?.report?.information">
+                                        <i class="fa fa-heartbeat" aria-hidden="true"></i> {{info.type}}
+                                        <span class="d-block font-10">
+                                            <span class="avail-text" *ngIf="info.available">Available</span>
+                                            <span class="not-avail-text" *ngIf="!info.available">Not Available</span>
+                                            reported
+                                            <span class="hours">{{info.createdOn|date}}</span>
+                                        </span>
+                                    </div>
+                                </ng-container>
                                 <div class="text-right">
-                                    <a class="btn btn-primary text-white" (click)="checkHospitalDetails(hospital.hospital_name)">Check  Info</a>
+                                    <a class="btn btn-primary text-white"
+                                        (click)="checkHospitalDetails(hospital.hospital_id)">Check Info</a>
                                 </div>
                             </div>
                         </div>
