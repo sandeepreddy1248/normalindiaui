@@ -1,1 +1,81 @@
-<p>vaccine works!</p>
+<!-- <div class="button-box">
+    <div id="btn"></div>
+    <button type="button" class="toggle-btn">Pin code</button>
+    <button type="button" class="toggle-btn"> State </button>
+</div> -->
+
+<div>
+    <tabset>
+        <tab heading="Search By PIN" id="tab1" (selectTab)="onSelect($event)">
+            <form [formGroup]="pinForm" (ngSubmit)="searchByPin()">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="Pincode">Pincode:</label>
+                        <input class="form-control" formControlName="pinCode" #pinCodeEl type="text"
+                            placeholder="Enter Pincode"
+                            [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }">
+                        <div *ngIf="submitted && pinForm.get('pinCode').errors" class="invalid-feedback">
+                            <div *ngIf="pinForm.get('pinCode').errors.required">State is required.</div>
+                        </div>
+                    </div>
+                    <div class="col-sm searchtn">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </form>
+        </tab>
+        <tab heading="Search By District" id="tab2" (selectTab)="onSelect($event)">
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="search()">
+                    <div class="row">
+                        <div class="col-sm">
+                            <label for="State">State:</label>
+                            <select formControlName="state" #stateEl class="form-control" id='state'
+                                [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }"
+                                (change)="getDistrictByState($event.target.value)">
+                                <option disabled>Select State</option>
+                                <option *ngFor="let stateVal of listOfStates" [value]="stateVal.state_id">
+                                    {{stateVal.state_name}}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.get('state').errors" class="invalid-feedback">
+                                <div *ngIf="form.get('state').errors.required">State is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <label for="District">District:</label>
+                            <select formControlName="district" class="form-control" #distric id='districId'
+                                [ngClass]="{ 'is-invalid': submitted && form.get('district').errors }">
+                                <option disabled>Select District</option>
+                                <!-- <option>Select District</option> -->
+                                <option *ngFor="let district of listOfDistrict" [value]="district.district_id">
+                                    {{district.district_name}}</option>
+                            </select>
+                            <div *ngIf="submitted && form.get('district').errors" class="invalid-feedback">
+                                <div *ngIf="form.get('district').errors.required">District is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-sm searchtn">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </tab>
+    </tabset>
+    <div>
+        <div fxLayout="column" *ngIf="listOfSlots.length">
+            <div class="item">
+                <div class="card mt-2" style="width: 50rem;" *ngFor="let slot of listOfSlots">
+                    <div class="card-body " (click)="checkVaccDetails(slot.date)">
+                        <h5 class="card-title" >
+                            {{slot.date | date }}</h5>
+                        <p class="card-text">{{slot.slots ? slot.slots : 'No Slots'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

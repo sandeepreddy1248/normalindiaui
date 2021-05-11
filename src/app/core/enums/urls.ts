@@ -23,7 +23,13 @@ export const HOSPITAL = {
     StateUrl: 'https://cdn-api.co-vin.in/api/v2/admin/location/states',
     DistrictUrl: ' https://cdn-api.co-vin.in/api/v2/admin/location/districts',
     HospitalByPinCodeUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitaldatabypin',
-    GethospitalbyidUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitalbyid'
+    GethospitaldataUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitaldata',
+    GethospitalbyidUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitalbyid',
+    addReport: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/addreport'
     // '../../../assets/Data/ts.json'
 }
 
+export const SLOTS = {
+    SlotsDate: 'https://www.healthifyme.com/api/v1/cowin/day_wise_slots',
+    slots: 'https://www.healthifyme.com/api/v1/cowin/slots'
+}

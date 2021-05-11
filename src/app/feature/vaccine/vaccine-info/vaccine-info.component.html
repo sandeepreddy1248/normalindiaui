@@ -1,0 +1,35 @@
+<h2> {{ vaccineData?.districtName }} </h2>
+
+
+
+
+
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <div class="d-flex justify-content-between">
+            <input type="date" [value]="vaccineData.date" (change)="getSlots($event.target.value)" />
+
+            <input type="text" placeholder="filter" [(ngModel)]="searchText">
+        </div>
+
+        <div class="overflow__scrool" >
+            <div class="card mt-3" *ngFor="let slot of listOfSlots | filter: searchText: 'center_name'"  (click)="goToLink()">
+                <div class="card-body row">
+                    <div class="col-8">
+                        <h5 class="mb-2">{{ slot.center_name }}</h5>
+                        <div class="mb-2">
+                            <span class="border p-2 "> {{ slot.min_age_limit }} </span>
+                        </div>
+                        <span > Vaccine: {{ slot.vaccine }} </span>
+                    </div>
+                    <div class="col-4">
+                        <span> {{slot.available_capacity }} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

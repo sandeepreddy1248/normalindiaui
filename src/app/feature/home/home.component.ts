@@ -101,15 +101,12 @@ export class HomeComponent implements OnInit {
       this.submitted = true;
       return;
     }
-    let val;
-    if (type == 'pin') {
-      val = this.pinForm.value
-    }
     this.submitted = false;
     this.params = new HttpParams()
-      .set("pincode", "10")
+      .set("state", this.listOfStates.find(res => res.state_id == this.form.value.state).state_name)
+      .set("district", this.listOfDistrict.find(res => res.district_id == this.form.value.district).district_name)
     this.commonService.commonApiCall(
-      HOSPITAL.HospitalByPinCodeUrl + '?' + this.params,
+      HOSPITAL.GethospitaldataUrl + '?' + this.params,
       HttpMethod.GET,
       null, (res, statusFlag) => {
         this.spinner.hide();

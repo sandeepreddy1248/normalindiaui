@@ -5,8 +5,9 @@ import { SharedRoutingModule } from './shared-routing.module';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FilterPipe } from './pipes/filter.pipe';
 @NgModule({
-  declarations: [],
+  declarations: [FilterPipe],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -19,7 +20,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TabsModule,
     FormsModule,
     ReactiveFormsModule,
-    ModalModule
+    ModalModule,
+    FilterPipe
   ]
 })
 export class SharedModule { }

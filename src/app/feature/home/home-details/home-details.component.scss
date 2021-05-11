@@ -81,3 +81,8 @@
       .tab-slider--body {
         margin-bottom: 20px;
       }
+
+
+      ::ng-deep .modal-dialog-width {
+        width: 350px;
+      }

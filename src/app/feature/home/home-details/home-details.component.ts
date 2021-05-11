@@ -1,7 +1,7 @@
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonService } from '../../../../app/core/service/common.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { HOSPITAL } from '../../../../app/core/enums/urls';
 import { HttpMethod } from '.././../../../app/core/enums/http-handlers';
@@ -16,13 +16,9 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class HomeDetailsComponent implements OnInit {
   reportForm: FormGroup;
   bedValue: any;
-  viewVaccineBedMode = 'notavaliable';
-  viewOxygenBedMode = 'avaliable';
-  viewICUBedMode = 'notavaliable';
-  viewRegularBedMode = 'avaliable';
   hospital_id: string;
   params: any;
-  hospitalDetails: any ={};
+  hospitalDetails: any = {};
   modalRef: BsModalRef;
 
   constructor(
@@ -34,22 +30,21 @@ export class HomeDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let hospital_id;
+    this.hospital_id;
     this.route.paramMap.subscribe(paramMap => {
-      hospital_id = paramMap.get('hospital_id');
+      this.hospital_id = paramMap.get('hospital_id');
+      this.getHospitalDetails(this.hospital_id);
     })
-    this.getHospitalDetails(hospital_id);
-    this.createReportForm();
   }
-  
- 
+
+
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.createReportForm();
+    this.modalRef = this.modalService.show(template, { class: 'modal-dialog-width' });
   }
 
   getHospitalDetails(hospital_id) {
-    this.params = new HttpParams()
-      .set("id", hospital_id)
+    this.params = new HttpParams().set("id", hospital_id)
     this.commonService.commonApiCall(
       HOSPITAL.GethospitalbyidUrl + '?' + this.params,
       HttpMethod.GET,
@@ -57,6 +52,7 @@ export class HomeDetailsComponent implements OnInit {
         this.spinner.hide();
         if (statusFlag) {
           this.hospitalDetails = res;
+          this.createReportForm();
         }
       }
     );
@@ -64,27 +60,63 @@ export class HomeDetailsComponent implements OnInit {
 
   createReportForm() {
     this.reportForm = this.fb.group({
-      name: [''],
-      regularBed: ['avaliable'],
-      icuBed: ['notavaliable'],
-      oxygenBed: ['avaliable'],
-      vaccine: ['notavaliable'],
+      name: ['', [Validators.required]],
+      regularBed: [false, [Validators.required]],
+      icuBed: [false, [Validators.required]],
+      oxygenBed: [false, [Validators.required]],
+      vaccine: [false, [Validators.required]],
       comment: ['']
-    })
+    });
+    if (this.hospitalDetails.org.report.information.length) {
+      for (let h = 0; h < this.hospitalDetails.org.report.information.length; h++) {
+        if (this.hospitalDetails.org.report.information[h].type === 'NORMAL BED') {
+          this.reportForm.patchValue({
+            regularBed: this.hospitalDetails.org.report.information[h].available ? true : false
+          })
+        } else if (this.hospitalDetails.org.report.information[h].type === 'OXYGEN') {
+          this.reportForm.patchValue({
+            oxygenBed: this.hospitalDetails.org.report.information[h].available ? true : false
+          })
+        } else if (this.hospitalDetails.org.report.information[h].type === 'ICU BED') {
+          this.reportForm.patchValue({
+            icuBed: this.hospitalDetails.org.report.information[h].available ? true : false
+          })
+        }
+      }
+    }
   }
 
-  submitReport(formdata) {
-    this.reportForm.controls.regularBed.setValue('');
-    console.log(formdata);
-    this.reportForm.reset();
+  submitReport() {
+    if (this.reportForm.invalid) {
+      return;
+    }
+    this.hospitalDetails
+    this.commonService.commonApiCall(
+      HOSPITAL.addReport,
+      HttpMethod.POST,
+      this.hospitalDetails, (res, statusFlag) => {
+        this.spinner.hide();
+        if (statusFlag) {
+          this.getHospitalDetails(this.hospital_id);
+        }
+      }
+    );
+
   }
 
   resetReport() {
     this.reportForm.reset();
   }
+
   vaccineEvent(value: any) {
     this.bedValue = value;
   }
 
+
+  setAvaliablity(value, key) {
+    this.reportForm.patchValue({
+      [key]: value
+    })
+  }
 
 }
