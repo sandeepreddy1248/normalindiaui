@@ -1,1 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+
+a {
+    text-decoration: none !important;
+}
+
+/**** Override Bootstrap Variables ****/
+$body-bg: #FBF9F6;
+$primary: #6258DE;
+

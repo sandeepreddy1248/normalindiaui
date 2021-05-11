@@ -4,84 +4,95 @@
     <button type="button" class="toggle-btn"> State </button>
 </div> -->
 
-<div>
-    <tabset>
-        <tab heading="Search By PIN" id="tab1" (selectTab)="onSelect($event)">
-            <form [formGroup]="pinForm" (ngSubmit)="searchByPin()">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label for="Pincode">Pincode:</label>
-                        <input class="form-control" formControlName="pinCode" #pinCodeEl type="text"
-                            placeholder="Enter Pincode"
-                            [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }">
-                        <div *ngIf="submitted && pinForm.get('pinCode').errors" class="invalid-feedback">
-                            <div *ngIf="pinForm.get('pinCode').errors.required">State is required.</div>
-                        </div>
-                    </div>
-                    <div class="col-sm searchtn">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                    <div>
-                    </div>
-                </div>
-            </form>
-        </tab>
-        <tab heading="Search By District" id="tab2" (selectTab)="onSelect($event)">
-            <div class="card-body">
-                <form [formGroup]="form" (ngSubmit)="search()">
+<div class="row">
+    <div class="col">
+        <p>Intro Text</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10  col-md-10 col-sm-12 mx-auto">
+        <tabset>
+            <tab heading="Search By PIN" id="tab1" (selectTab)="onSelect($event)">
+                <form [formGroup]="pinForm" (ngSubmit)="searchByPin()">
                     <div class="row">
-                        <div class="col-sm">
-                            <label for="State">State:</label>
-                            <select formControlName="state" #stateEl class="form-control" id='state'
-                                [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }"
-                                (change)="getDistrictByState($event.target.value)">
-                                <option disabled>Select State</option>
-                                <option *ngFor="let stateVal of listOfStates" [value]="stateVal.state_id">
-                                    {{stateVal.state_name}}
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && form.get('state').errors" class="invalid-feedback">
-                                <div *ngIf="form.get('state').errors.required">State is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <label for="District">District:</label>
-                            <select formControlName="district" class="form-control" #distric id='districId'
-                                [ngClass]="{ 'is-invalid': submitted && form.get('district').errors }">
-                                <option disabled>Select District</option>
-                                <!-- <option>Select District</option> -->
-                                <option *ngFor="let district of listOfDistrict" [value]="district.district_id">
-                                    {{district.district_name}}</option>
-                            </select>
-                            <div *ngIf="submitted && form.get('district').errors" class="invalid-feedback">
-                                <div *ngIf="form.get('district').errors.required">District is required.</div>
+                        <div class="col-sm-6">
+                            <label for="Pincode">Pincode:</label>
+                            <input class="form-control" formControlName="pinCode" #pinCodeEl type="text"
+                                placeholder="Enter Pincode"
+                                [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }">
+                            <div *ngIf="submitted && pinForm.get('pinCode').errors" class="invalid-feedback">
+                                <div *ngIf="pinForm.get('pinCode').errors.required">State is required.</div>
                             </div>
                         </div>
                         <div class="col-sm searchtn">
                             <button class="btn btn-primary" type="submit">Search</button>
                         </div>
+                        <div>
+                        </div>
                     </div>
                 </form>
-            </div>
-        </tab>
-    </tabset>
-    <div>
-        <div fxLayout="column" *ngIf="listOfHospitals.length">
-            <div class="item hospital-list card mt-2 p-1">
-                <div class="card mt-2" *ngFor="let hospital of listOfHospitals">
-                    <div class="row">
-                        <div class="col-md-3 align-self-center pr-0">
-                            <div class="hospital-img">
-                                <img class="card-img-top" src="../../../assets/Images/hospital.jpg" alt="Card image cap"
-                                    (click)="checkHospitalDetails(hospital.hospital_id)">
+            </tab>
+            <tab heading="Search By District" id="tab2" (selectTab)="onSelect($event)">
+                <div class="card-body">
+                    <form [formGroup]="form" (ngSubmit)="search()">
+                        <div class="row">
+                            <div class="col-sm">
+                                <label for="State">State:</label>
+                                <select formControlName="state" #stateEl class="form-control" id='state'
+                                    [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }"
+                                    (change)="getDistrictByState($event.target.value)">
+                                    <option disabled>Select State</option>
+                                    <option *ngFor="let stateVal of listOfStates" [value]="stateVal.state_id">
+                                        {{stateVal.state_name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && form.get('state').errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('state').errors.required">State is required.</div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <label for="District">District:</label>
+                                <select formControlName="district" class="form-control" #distric id='districId'
+                                    [ngClass]="{ 'is-invalid': submitted && form.get('district').errors }">
+                                    <option disabled>Select District</option>
+                                    <!-- <option>Select District</option> -->
+                                    <option *ngFor="let district of listOfDistrict" [value]="district.district_id">
+                                        {{district.district_name}}</option>
+                                </select>
+                                <div *ngIf="submitted && form.get('district').errors" class="invalid-feedback">
+                                    <div *ngIf="form.get('district').errors.required">District is required.</div>
+                                </div>
+                            </div>
+                            <div class="col-sm searchtn">
+                                <button class="btn btn-primary" type="submit">Search</button>
                             </div>
                         </div>
-                        <div class="col-md-9 pl-0">
-                            <div class="hospital-details">
-                                <h5 class="card-title mt-1" (click)="checkHospitalDetails(hospital.hospital_id)">
-                                    {{hospital.hospital_name}} <span class="hospital-contact"> Contact :
-                                        {{hospital.hospital_phone}}</span></h5>
-                                <p class="card-text mb-1">{{hospital.area}}, {{hospital.district}}</p>
+                    </form>
+                </div>
+            </tab>
+        </tabset>
+        <div>
+            <div fxLayout="column" *ngIf="listOfHospitals.length">
+                <div class="item hospital-list mt-2 p-1">
+                    <div *ngFor="let hospital of listOfHospitals">
+                        <div class="card border-0 shadow-sm mb-3">
+                            <div class="card-header bg-white border-0 pt-3">
+                                <h4 class="card-title align-items-start flex-column" 
+                                    (click)="checkHospitalDetails(hospital.hospital_id)">
+                                    <span class="card-label fw-bolder text-dark fs-4">{{hospital.hospital_name}}</span>
+                                </h4>
+                            </div>
+                            <div class="card-body pt-3 mt-n3">
+                                <address class="mb-1">
+                                    <i class="fa fa-location-arrow text-muted mr-1"></i>
+                                    <a href="http://maps.google.com/?q=1200 Pennsylvania Ave SE, Washington, District of Columbia, 20003"
+                                        class="text-gray-800 text-hover-primary fs-6">
+                                        {{hospital.area}}, {{hospital.district}}</a>
+                                </address>
+                                <i class="fa fa-phone text-muted mr-1"></i>
+                                <a href="tel:123-456-7890">{{hospital.hospital_phone}}</a>
+
                                 <ng-container
                                     *ngIf="hospital?.org?.report?.information && hospital?.org?.report?.information.length">
                                     <div class="available-beds ml-2"
@@ -95,13 +106,45 @@
                                         </span>
                                     </div>
                                 </ng-container>
-                                <div class="text-right">
-                                    <a class="btn btn-primary text-white"
-                                        (click)="checkHospitalDetails(hospital.hospital_id)">Check Info</a>
-                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- <div class="card  border-0 shadow-sm mt-2" *ngFor="let hospital of listOfHospitals">
+                        <div class="row">
+                            <div class="col-md-3 align-self-center pr-0">
+                                <div class="hospital-img">
+                                    <img class="card-img-top" src="../../../assets/Images/hospital.jpg" alt="Card image cap"
+                                        (click)="checkHospitalDetails(hospital.hospital_id)">
+                                </div>
+                            </div>
+                            <div class="col-md-9 pl-0">
+                                <div class="hospital-details">
+                                    <h5 class="card-title mt-1" (click)="checkHospitalDetails(hospital.hospital_id)">
+                                        {{hospital.hospital_name}} <span class="hospital-contact"> Contact :
+                                            {{hospital.hospital_phone}}</span></h5>
+                                    <p class="card-text mb-1">{{hospital.area}}, {{hospital.district}}</p>
+                                    <ng-container
+                                        *ngIf="hospital?.org?.report?.information && hospital?.org?.report?.information.length">
+                                        <div class="available-beds ml-2"
+                                            *ngFor="let info of hospital?.org?.report?.information">
+                                            <i class="fa fa-heartbeat" aria-hidden="true"></i> {{info.type}}
+                                            <span class="d-block font-10">
+                                                <span class="avail-text" *ngIf="info.available">Available</span>
+                                                <span class="not-avail-text" *ngIf="!info.available">Not Available</span>
+                                                reported
+                                                <span class="hours">{{info.createdOn|date}}</span>
+                                            </span>
+                                        </div>
+                                    </ng-container>
+                                    <div class="text-right">
+                                        <a class="btn btn-primary text-white"
+                                            (click)="checkHospitalDetails(hospital.hospital_id)">Check Info</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
