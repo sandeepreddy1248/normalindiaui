@@ -1,10 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap');
+
 
 a {
     text-decoration: none !important;
 }
 
 /**** Override Bootstrap Variables ****/
+$font-family-sans-serif: Source Sans Pro, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 $body-bg: #FBF9F6;
 $primary: #6258DE;
 

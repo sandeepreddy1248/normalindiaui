@@ -76,7 +76,7 @@
             <div fxLayout="column" *ngIf="listOfHospitals.length">
                 <div class="item hospital-list mt-2 p-1">
                     <div *ngFor="let hospital of listOfHospitals">
-                        <div class="card border-0 shadow-sm mb-3">
+                        <div class="card border-0 shadow-sm mb-3 p-3">
                             <div class="card-header bg-white border-0 pt-3">
                                 <h4 class="card-title align-items-start flex-column" 
                                     (click)="checkHospitalDetails(hospital.hospital_id)">
@@ -86,23 +86,24 @@
                             <div class="card-body pt-3 mt-n3">
                                 <address class="mb-1">
                                     <i class="fa fa-location-arrow text-muted mr-1"></i>
-                                    <a href="http://maps.google.com/?q=1200 Pennsylvania Ave SE, Washington, District of Columbia, 20003"
-                                        class="text-gray-800 text-hover-primary fs-6">
+                                    <a href="http://maps.google.com/?q={{hospital.area}}, {{hospital.district}}"
+                                        class="text-gray-800 text-hover-primary fs-6" target="_blank">
                                         {{hospital.area}}, {{hospital.district}}</a>
                                 </address>
                                 <i class="fa fa-phone text-muted mr-1"></i>
-                                <a href="tel:123-456-7890">{{hospital.hospital_phone}}</a>
+                                <a href="tel:{{hospital.hospital_phone}}">{{hospital.hospital_phone}}</a>
 
                                 <ng-container
                                     *ngIf="hospital?.org?.report?.information && hospital?.org?.report?.information.length">
-                                    <div class="available-beds ml-2"
+                                    <div class="available-beds mt-2"
                                         *ngFor="let info of hospital?.org?.report?.information">
-                                        <i class="fa fa-heartbeat" aria-hidden="true"></i> {{info.type}}
-                                        <span class="d-block font-10">
-                                            <span class="avail-text" *ngIf="info.available">Available</span>
-                                            <span class="not-avail-text" *ngIf="!info.available">Not Available</span>
-                                            reported
-                                            <span class="hours">{{info.createdOn|date}}</span>
+                                        <i class="fa fa-bed text-muted mr-1" aria-hidden="true"></i> 
+                                        <span class="text-capitalize fw-bold fs-14">{{info.type}}</span>
+                                        <span class="d-block">
+                                            <span *ngIf="info.available" class="badge badge-success">Available</span>
+                                            <span class="badge badge-danger" *ngIf="!info.available">
+                                                Not Available</span>
+                                            <span class="hours"><small class="fs-12"> reported {{info.createdOn|date}}</small></span>
                                         </span>
                                     </div>
                                 </ng-container>
