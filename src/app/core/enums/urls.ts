@@ -36,5 +36,6 @@ export const SLOTS = {
 
 export const COMPONENTS = {
     getComponentdata: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/getcomponentdata',
-    fecthdata: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/fecthdata',
+    fecthdata: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/fetchdata',
+    fetchdatabypin: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/fetchdatabypin'
 }

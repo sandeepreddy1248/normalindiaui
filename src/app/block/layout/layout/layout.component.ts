@@ -1,13 +1,14 @@
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CommonService } from 'src/app/core/service/common.service';
+import { CommonService } from '../../../core/service/common.service';
 import { HttpMethod } from './../../../core/enums/http-handlers';
-import { Component, OnInit } from '@angular/core';
-import { COMPONENTS } from 'src/app/core/enums/urls';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { COMPONENTS } from '../../../core/enums/urls';
 
 import { HOSPITAL } from '../../../core/enums/urls';
 import { Router } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-layout',
@@ -26,10 +27,10 @@ export class LayoutComponent implements OnInit {
   listOfStates = [];
   listOfDistrict = [];
   form: FormGroup;
+  pinForm: FormGroup;
+  modalRef: BsModalRef;
+  reportForm: FormGroup;
 
-  pinForm = new FormGroup({
-    pinCode: new FormControl('', Validators.required),
-  });
 
   filterList = [];
 
@@ -38,6 +39,8 @@ export class LayoutComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private http: HttpClient,
     private router: Router,
+    private fb: FormBuilder,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -45,8 +48,29 @@ export class LayoutComponent implements OnInit {
       state: new FormControl('', Validators.required),
       district: new FormControl('', Validators.required)
     });
+    this.pinForm = new FormGroup({
+      pinCode: new FormControl('', Validators.required),
+    });
+
+    this.createReportForm();
     this.getComponentdata();
     this.getStates();
+  }
+
+  createReportForm() {
+    this.reportForm = this.fb.group({
+      name: ['', [Validators.required]],
+      regularBed: [false, [Validators.required]],
+      icuBed: [false, [Validators.required]],
+      oxygenBed: [false, [Validators.required]],
+      vaccine: [false, [Validators.required]],
+      comment: ['']
+    });
+  }
+
+
+  setTab() {
+    this.submitted = false;
   }
 
   getStates(): any {
@@ -96,14 +120,20 @@ export class LayoutComponent implements OnInit {
 
   fecthdata() {
     this.submitted = true;
+    if (this.form.invalid) {
+      return;
+    }
     const params = new HttpParams()
       .set("state", this.listOfStates.find(res => res.state_id == +this.form.get('state').value).state_name)
       .set("district", this.listOfDistrict.find(res => res.district_id == +this.form.get('district').value).district_name)
       .set("type", this.selectedMode)
       .set("subtype", this.selectedChildMode)
+    this.commonCode(COMPONENTS.fecthdata + '?' + params);
+  }
 
+  commonCode(url) {
     this.commonService.commonApiCall(
-      COMPONENTS.fecthdata + '?' + params,
+      url,
       HttpMethod.GET,
       null, (res, statusFlag) => {
         this.spinner.hide();
@@ -112,6 +142,61 @@ export class LayoutComponent implements OnInit {
         }
       }
     );
+  }
+
+  fetchdatabypin() {
+    this.submitted = true;
+    if (this.pinForm.invalid) {
+      return;
+    }
+    const params = new HttpParams()
+      .set("pincode", this.pinForm.get('pinCode').value)
+      .set("type", this.selectedMode)
+      .set("subtype", this.selectedChildMode)
+    this.commonCode(COMPONENTS.fetchdatabypin + '?' + params);
+  }
+
+  openModal(template: TemplateRef<any>, bed, name) {
+    this.createReportForm();
+    this.reportForm.patchValue({
+      name: name
+    })
+    if (bed.length) {
+      for (let h = 0; h < bed.length; h++) {
+        if (bed[h].type === 'Normal') {
+          this.reportForm.patchValue({
+            regularBed: bed[h].available ? true : false
+          })
+        } else if (bed[h].type === 'OXYGEN') {
+          this.reportForm.patchValue({
+            oxygenBed: bed[h].available ? true : false
+          })
+        } else if (bed[h].type === 'ICU') {
+          this.reportForm.patchValue({
+            icuBed: bed[h].available ? true : false
+          })
+        }
+      }
+    }
+    this.modalRef = this.modalService.show(template, { class: 'modal-dialog-width' });
+  }
+
+
+  submitReport() {
+    if (this.reportForm.invalid) {
+      return;
+    }
+    this.commonService.commonApiCall(
+      HOSPITAL.addReport,
+      HttpMethod.POST,
+      this.reportForm.value, (res, statusFlag) => {
+        this.spinner.hide();
+        if (statusFlag) {
+          // this.getHospitalDetails(this.hospital_id);
+        }
+      }
+    );
+
   }
 
   setBedType(type) {
@@ -129,6 +214,9 @@ export class LayoutComponent implements OnInit {
     this.selectedMode = child;
     this.childLists = [];
     this.childLists = this.listOfComponents.find(res => res.componentname === child).componentvalues;
+    if (this.childLists.length) {
+      this.selectedChildMode = this.childLists[0];
+    }
   }
 
   selectedChild(data) {

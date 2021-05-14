@@ -37,25 +37,28 @@
                 <div class="row text-center">
                     <div class="col-12">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a class="active" data-toggle="tab" href="#menu1">By Pin</a></li>
-                            <li><a data-toggle="tab" href="#menu2">By District</a></li>
+                            <li class="active" (click)="setTab()"><a class="active" data-toggle="tab" href="#menu1">By
+                                    Pin</a></li>
+                            <li (click)="setTab()"><a data-toggle="tab" href="#menu2">By District</a></li>
                         </ul>
                         <div class="tab-content p-2 py-3">
                             <div id="menu1" class="tab-pane fade in show active">
-                                <div class="row">
-                                    <div class="col-md-4 text-left dropdown-mobile">
-
-                                        <input class="form-control" type="text" placeholder="Pincode">
-                                        <!-- <div *ngIf="submitted && pinForm.get('pinCode').errors" class="invalid-feedback">
-                                                <div *ngIf="pinForm.get('pinCode').errors.required">State is required.</div>
-                                            </div> -->
-
-
-                                        <div class="col-sm searchtn">
-                                            <button class="btn btn-primary" type="submit">Search</button>
+                                <form [formGroup]="pinForm" (ngSubmit)="fetchdatabypin()">
+                                    <div class="row">
+                                        <div class="col-md-4 text-left dropdown-mobile">
+                                            <input class="form-control" formControlName="pinCode" type="text"
+                                                placeholder="pincode">
+                                            <div *ngIf="submitted && pinForm.get('pinCode').errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="pinForm.get('pinCode').errors.required">pincode is required.
+                                                </div>
+                                            </div>
+                                            <div class="col-sm searchtn">
+                                                <button class="btn btn-primary" type="submit">Search</button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="p-2 search-results">
@@ -63,57 +66,60 @@
                                             <div class="row">
                                                 <div class="col-lg-12 mb-4">
                                                     <!-- card for all start -->
-                                                    <div class="card border-0 shadow-sm">
-                                                        <div class="card-body text-left">
-                                                            <h5 class="card-title text-left hospital-name">Adilabad
-                                                                Neuro Super Speciality Hospital</h5>
-                                                            <p class="card-text text-left mb-1"><i
-                                                                    class="fa fa-phone"></i> +91 9032628839</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-location"></i> 123 street name,
-                                                                Address line, city, TS, 530002 - India</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-date"></i>
-                                                                Updated 3 hours ago</p>
-                                                            <div class="row available-details">
-                                                                <div class="col-auto mobile-view">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> Regular
-                                                                            Bed</span>
-                                                                        <span class="available">Available</span>
+
+                                                    <ng-container *ngIf="selectedMode == 'Bed'">
+                                                        <div class="card shadow-sm mt-2" *ngFor="let bed of filterList">
+                                                            <div class="card-body text-left">
+                                                                <h5 class="card-title text-left hospital-name">{{
+                                                                    bed.hospital.hospital_name }}</h5>
+                                                                <p class="card-text text-left mb-1"><i
+                                                                        class="fa fa-phone"></i> {{
+                                                                    bed.hospital.hospital_phone }}</p>
+                                                                <p class="card-text text-left  mb-1"><i
+                                                                        class="fa fa-location"></i> {{
+                                                                    bed.hospital.hospital_address }}</p>
+                                                                <p class="card-text text-left  mb-1"><i
+                                                                        class="fa fa-date"></i>
+                                                                    Updated 3 hours ago</p>
+                                                                <div class="row available-details ">
+                                                                    <div class="col-md-3 d-flex"
+                                                                        *ngFor="let sub of bed.resources[0].subtypes">
+                                                                        <div class="bed-details">
+                                                                            <span class="d-block"><i
+                                                                                    class="fa fa-bed mr-2"></i> {{
+                                                                                setBedType(sub.type) }} </span>
+                                                                            <span
+                                                                                [ngClass]="sub.available ? 'available' : 'not-available'">
+                                                                                {{ sub.available ? 'Available' :
+                                                                                'Not-Available' }} </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="comments d-flex mt-1 ml-4 align-self-center">
+                                                                            <span class="like mr-1"><i
+                                                                                    class="fa fa-thumbs-up"></i> <span
+                                                                                    class="d-block">{{ sub.upvote
+                                                                                    }}</span></span>
+                                                                            <span class="like"><i
+                                                                                    class="fa fa-thumbs-down"></i> <span
+                                                                                    class="d-block">{{ sub.downvote
+                                                                                    }}</span></span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col-auto mobile-view">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> ICU
-                                                                            Bed</span>
-                                                                        <span class="not-available">Not-Available</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto mobile-view">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> Oxygen
-                                                                            Bed</span>
-                                                                        <span class="available">Available</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto mobile-view">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i>
-                                                                            Vaccine</span>
-                                                                        <span class="no-data">No-Data</span>
+                                                                    <div class="col align-self-center text-right">
+                                                                        <a class="btn btn-primary p-2 py-1 mr-1"
+                                                                            href="#!"
+                                                                            (click)="openModal(template, bed.resources[0].subtypes, bed.hospital.hospital_name)">Report
+                                                                            Updates</a>
+                                                                        <a class="btn btn-outline-primary p-2 py-1 "
+                                                                            href="#!">Notify Me</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- card for all end -->
-                                                    </div>
+                                                    </ng-container>
+
                                                     <!-- card for all vaccine -->
-                                                    <div class="card border-0 shadow-sm mt-2">
+                                                    <!-- <div class="card border-0 shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -148,10 +154,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for vaccine end -->
                                                     <!-- card for all vaccine available -->
-                                                    <div class="card border-0 shadow-sm mt-2">
+                                                    <!-- <div class="card border-0 shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -186,10 +192,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for vaccine available end -->
                                                     <!-- card for all Plasma -->
-                                                    <div class="card border-0 shadow-sm mt-2">
+                                                    <!-- <div class="card border-0 shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -238,11 +244,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for Plasma end -->
 
                                                     <!-- card for all Plasma -->
-                                                    <div class="card border-0 shadow-sm mt-2">
+                                                    <!-- <div class="card border-0 shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -315,7 +321,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for Plasma end -->
                                                 </div>
                                             </div>
@@ -332,7 +338,8 @@
                                                 [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }"
                                                 (change)="getDistrictByState($event.target.value)">
                                                 <option disabled>Select State</option>
-                                                <option *ngFor="let stateVal of listOfStates" [value]="stateVal.state_id">
+                                                <option *ngFor="let stateVal of listOfStates"
+                                                    [value]="stateVal.state_id">
                                                     {{stateVal.state_name}}
                                                 </option>
                                             </select>
@@ -342,15 +349,19 @@
                                         </div>
                                         <div class="col-3 text-start">
                                             <label for="District">District:</label>
-                                            <select formControlName="district" class="form-control" #distric id='districId'
+                                            <select formControlName="district" class="form-control" #distric
+                                                id='districId'
                                                 [ngClass]="{ 'is-invalid': submitted && form.get('district').errors }">
                                                 <option disabled>Select District</option>
                                                 <!-- <option>Select District</option> -->
-                                                <option *ngFor="let district of listOfDistrict" [value]="district.district_id">
+                                                <option *ngFor="let district of listOfDistrict"
+                                                    [value]="district.district_id">
                                                     {{district.district_name}}</option>
                                             </select>
-                                            <div *ngIf="submitted && form.get('district').errors" class="invalid-feedback">
-                                                <div *ngIf="form.get('district').errors.required">District is required.</div>
+                                            <div *ngIf="submitted && form.get('district').errors"
+                                                class="invalid-feedback">
+                                                <div *ngIf="form.get('district').errors.required">District is required.
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-2 searchtn align-items-end d-flex">
@@ -367,41 +378,53 @@
 
                                                     <ng-container *ngIf="selectedMode == 'Bed'">
                                                         <div class="card shadow-sm mt-2" *ngFor="let bed of filterList">
-                                                        <div class="card-body text-left">
-                                                            <h5 class="card-title text-left hospital-name">{{ bed.hospital.hospital_name }}</h5>
-                                                            <p class="card-text text-left mb-1"><i
-                                                                    class="fa fa-phone"></i> {{ bed.hospital.hospital_phone }}</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-location"></i> {{ bed.hospital.hospital_address }}</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-date"></i>
-                                                                Updated 3 hours ago</p>
-                                                            <div class="row available-details ">
-                                                                <div class="col-md-3 d-flex" *ngFor="let sub of bed.resources[0].subtypes">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> {{ setBedType(sub.type) }} </span>
-                                                                        <span [ngClass]="sub.available ? 'available' : 'not-available'"> {{ sub.available ? 'Available' : 'Not-Available' }} </span>
+                                                            <div class="card-body text-left">
+                                                                <h5 class="card-title text-left hospital-name">{{
+                                                                    bed.hospital.hospital_name }}</h5>
+                                                                <p class="card-text text-left mb-1"><i
+                                                                        class="fa fa-phone"></i> {{
+                                                                    bed.hospital.hospital_phone }}</p>
+                                                                <p class="card-text text-left  mb-1"><i
+                                                                        class="fa fa-location"></i> {{
+                                                                    bed.hospital.hospital_address }}</p>
+                                                                <p class="card-text text-left  mb-1"><i
+                                                                        class="fa fa-date"></i>
+                                                                    Updated 3 hours ago</p>
+                                                                <div class="row available-details ">
+                                                                    <div class="col-md-3 d-flex"
+                                                                        *ngFor="let sub of bed.resources[0].subtypes">
+                                                                        <div class="bed-details">
+                                                                            <span class="d-block"><i
+                                                                                    class="fa fa-bed mr-2"></i> {{
+                                                                                setBedType(sub.type) }} </span>
+                                                                            <span
+                                                                                [ngClass]="sub.available ? 'available' : 'not-available'">
+                                                                                {{ sub.available ? 'Available' :
+                                                                                'Not-Available' }} </span>
+                                                                        </div>
+                                                                        <div
+                                                                            class="comments d-flex mt-1 ml-4 align-self-center">
+                                                                            <span class="like mr-1"><i
+                                                                                    class="fa fa-thumbs-up"></i> <span
+                                                                                    class="d-block">{{ sub.upvote
+                                                                                    }}</span></span>
+                                                                            <span class="like"><i
+                                                                                    class="fa fa-thumbs-down"></i> <span
+                                                                                    class="d-block">{{ sub.downvote
+                                                                                    }}</span></span>
+                                                                        </div>
                                                                     </div>
-                                                                    <div
-                                                                        class="comments d-flex mt-1 ml-4 align-self-center">
-                                                                        <span class="like mr-1"><i
-                                                                                class="fa fa-thumbs-up"></i> <span
-                                                                                class="d-block">{{ sub.upvote }}</span></span>
-                                                                        <span class="like"><i
-                                                                                class="fa fa-thumbs-down"></i> <span
-                                                                                class="d-block">{{ sub.downvote }}</span></span>
+                                                                    <div class="col align-self-center text-right">
+                                                                        <a class="btn btn-primary p-2 py-1 mr-1"
+                                                                            href="#!"
+                                                                            (click)="openModal(template, bed.resources[0].subtypes, bed.hospital.hospital_name)">Report
+                                                                            Updates</a>
+                                                                        <a class="btn btn-outline-primary p-2 py-1 "
+                                                                            href="#!">Notify Me</a>
                                                                     </div>
-                                                                </div>
-                                                                <div class="col align-self-center text-right">
-                                                                    <a class="btn btn-primary p-2 py-1 mr-1"
-                                                                        href="#!">Report Updates</a>
-                                                                    <a class="btn btn-outline-primary p-2 py-1 "
-                                                                        href="#!">Notify Me</a>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
                                                     </ng-container>
 
                                                     <!-- card for all start -->
@@ -453,6 +476,8 @@
                                                             </div>
                                                         </div>
                                                     </div> -->
+                                                    <!-- card for all end -->
+
                                                     <!-- card for all vaccine -->
                                                     <!-- <div class="card shadow-sm mt-2">
                                                         <div class="card-body text-left">
@@ -582,7 +607,7 @@
                                                     <!-- card for Plasma end -->
 
                                                     <!-- card for all Plasma -->
-                                                   
+
                                                     <!-- card for Plasma end -->
                                                 </div>
                                             </div>
@@ -605,6 +630,88 @@
         </div>
     </footer>
 </div>
+
+
+
+<ng-template #template>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">New Report</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <form [formGroup]="reportForm">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="">My Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                        <span *ngIf="reportForm.controls.name.errors?.required" class="text-danger"> Name is
+                            required</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Regular Bed</label>
+                        <div class="tab-slider--nav">
+                            <ul class="tab-slider--tabs">
+                                <li class="tab-slider--trigger" [class.active]="reportForm.get('regularBed').value"
+                                    rel="avaliable" (click)="setAvaliablity(true, 'regularBed')">Avaliable</li>
+                                <li class="tab-slider--trigger" [class.inactive]="!reportForm.get('regularBed').value"
+                                    rel="notavaliable" (click)="setAvaliablity(false, 'regularBed')">Not Avaliable</li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">ICU Bed</label>
+                        <div class="tab-slider--nav">
+                            <ul class="tab-slider--tabs">
+                                <li class="tab-slider--trigger" [class.active]="reportForm.get('icuBed').value"
+                                    rel="avaliable" (click)="setAvaliablity(true, 'icuBed')">Avaliable</li>
+                                <li class="tab-slider--trigger" [class.inactive]="!reportForm.get('icuBed').value"
+                                    rel="notavaliable" (click)="setAvaliablity(false, 'icuBed')">Not Avaliable</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Oxygen Bed</label>
+                        <div class="tab-slider--nav">
+                            <ul class="tab-slider--tabs">
+                                <li class="tab-slider--trigger" [class.active]="reportForm.get('oxygenBed').value"
+                                    rel="avaliable" (click)="setAvaliablity(true, 'oxygenBed')">Avaliable</li>
+                                <li class="tab-slider--trigger" [class.inactive]="!reportForm.get('oxygenBed').value"
+                                    rel="notavaliable" (click)="setAvaliablity(false, 'oxygenBed')">Not Avaliable</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Vaccine</label>
+                        <div class="tab-slider--nav">
+                            <ul class="tab-slider--tabs">
+                                <li class="tab-slider--trigger" [class.active]="reportForm.get('vaccine').value"
+                                    rel="avaliable" (click)="setAvaliablity(true, 'vaccine')">Avaliable</li>
+                                <li class="tab-slider--trigger" [class.inactive]="!reportForm.get('vaccine').value"
+                                    rel="notavaliable" (click)="setAvaliablity(false, 'vaccine')">Not Avaliable</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Comment</label>
+                        <textarea type="text" name="comment" class="form-control" formControlName="comment"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-primary col-sm-5" (click)="submitReport()">Done</button>
+                <button type="button" class="btn col-sm-5 ml-2 border" (click)="modalRef.hide()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</ng-template>
 
 
 
