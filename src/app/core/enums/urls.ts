@@ -33,3 +33,8 @@ export const SLOTS = {
     SlotsDate: 'https://www.healthifyme.com/api/v1/cowin/day_wise_slots',
     slots: 'https://www.healthifyme.com/api/v1/cowin/slots'
 }
+
+export const COMPONENTS = {
+    getComponentdata: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/getcomponentdata',
+    fecthdata: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/fecthdata',
+}

@@ -10,6 +10,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { LayoutComponent } from './block/layout/layout/layout.component';
 import {FeatureModule} from './feature/feature.module'
 import { RouterModule } from '@angular/router';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RouterModule } from '@angular/router';
     NgxSpinnerModule,
     ToastrModule.forRoot(),
     FeatureModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],

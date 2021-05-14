@@ -17,17 +17,25 @@
             <div class="container-fluid">
                 <!-- Jumbotron Header-->
                 <header class="jumbotron my-1">
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">All</a>
-                    <a class="btn btn-primary filter-btn btn-lg active" href="#!">Beds</a>
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">Plasma</a>
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">Vaccine</a>
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">Oxygen</a>
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">ICU</a>
-                    <a class="btn btn-primary filter-btn btn-lg" href="#!">Ventilator</a>
+                    <a *ngFor="let list of listOfComponents" (click)="childList(list.componentname)"
+                        [ngClass]="{ 'active': list.componentname == selectedMode }"
+                        class="btn btn-primary filter-btn btn-lg" href="#!">{{
+                        list.componentname }}
+                    </a>
+                    <!-- active -->
+                </header>
+                <header class="jumbotron my-1">
+
+                    <a *ngFor="let child of childLists" (click)="selectedChild(child)"
+                        [ngClass]="{ 'active': child == selectedChildMode }" class="btn btn-primary filter-btn btn-lg"
+                        href="#!">
+                        {{ child }}
+                    </a>
+                    <!-- active -->
                 </header>
                 <!-- Page Features-->
                 <div class="row text-center">
-                    <div class="col-lg-8 col-md-12 col-sm-12 mx-auto">
+                    <div class="col-12">
                         <ul class="nav nav-tabs">
                             <li class="active"><a class="active" data-toggle="tab" href="#menu1">By Pin</a></li>
                             <li><a data-toggle="tab" href="#menu2">By District</a></li>
@@ -35,19 +43,17 @@
                         <div class="tab-content p-2 py-3">
                             <div id="menu1" class="tab-pane fade in show active">
                                 <div class="row">
-                                    <div class="col-md-6 text-left dropdown-mobile">
-                                        <select class="form-select select mr-3 mb-1 col-6" aria-label="Default select example">
-                                            <option selected>State</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <select class="form-select select col-6" aria-label="Default select example">
-                                            <option selected>District</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                    <div class="col-md-4 text-left dropdown-mobile">
+
+                                        <input class="form-control" type="text" placeholder="Pincode">
+                                        <!-- <div *ngIf="submitted && pinForm.get('pinCode').errors" class="invalid-feedback">
+                                                <div *ngIf="pinForm.get('pinCode').errors.required">State is required.</div>
+                                            </div> -->
+
+
+                                        <div class="col-sm searchtn">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -221,7 +227,8 @@
                                                                         <span class="options aval"> A+ 100</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col align-self-center text-right mobile-buttons">
+                                                                <div
+                                                                    class="col align-self-center text-right mobile-buttons">
                                                                     <a class="btn btn-primary p-2 py-1 mr-1"
                                                                         href="#!">Report</a>
                                                                     <a class="btn btn-outline-primary p-2 py-1 mr-1"
@@ -282,7 +289,8 @@
                                                                                 class="d-block">103</span></span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-auto d-flex bed-details-mobile hospital-like">
+                                                                <div
+                                                                    class="col-auto d-flex bed-details-mobile hospital-like">
                                                                     <div class="bed-details">
                                                                         <span class="d-block"><i
                                                                                 class="fa fa-bed mr-2"></i> Oxigen
@@ -316,30 +324,88 @@
                                 </div>
                             </div>
                             <div id="menu2" class="tab-pane fade">
-                                <div class="row">
-                                    <div class="col-md-6 d-flex text-left">
-                                        <select class="form-select mr-3 col-6" aria-label="Default select example">
-                                            <option selected>State</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <select class="form-select col-6" aria-label="Default select example">
-                                            <option selected>District</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                <form [formGroup]="form" (ngSubmit)="fecthdata()">
+                                    <div class="row">
+                                        <div class="col-3 text-start">
+                                            <label for="State">State:</label>
+                                            <select formControlName="state" #stateEl class="form-control" id='state'
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('state').errors }"
+                                                (change)="getDistrictByState($event.target.value)">
+                                                <option disabled>Select State</option>
+                                                <option *ngFor="let stateVal of listOfStates" [value]="stateVal.state_id">
+                                                    {{stateVal.state_name}}
+                                                </option>
+                                            </select>
+                                            <div *ngIf="submitted && form.get('state').errors" class="invalid-feedback">
+                                                <div *ngIf="form.get('state').errors.required">State is required.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3 text-start">
+                                            <label for="District">District:</label>
+                                            <select formControlName="district" class="form-control" #distric id='districId'
+                                                [ngClass]="{ 'is-invalid': submitted && form.get('district').errors }">
+                                                <option disabled>Select District</option>
+                                                <!-- <option>Select District</option> -->
+                                                <option *ngFor="let district of listOfDistrict" [value]="district.district_id">
+                                                    {{district.district_name}}</option>
+                                            </select>
+                                            <div *ngIf="submitted && form.get('district').errors" class="invalid-feedback">
+                                                <div *ngIf="form.get('district').errors.required">District is required.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-2 searchtn align-items-end d-flex">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                                 <div class="row">
                                     <div class="col-12 ">
                                         <div class="card p-2 search-results">
                                             <h6 class="text-left">Search Results</h6>
                                             <div class="row">
                                                 <div class="col-lg-12 mb-4">
+
+                                                    <ng-container *ngIf="selectedMode == 'Bed'">
+                                                        <div class="card shadow-sm mt-2" *ngFor="let bed of filterList">
+                                                        <div class="card-body text-left">
+                                                            <h5 class="card-title text-left hospital-name">{{ bed.hospital.hospital_name }}</h5>
+                                                            <p class="card-text text-left mb-1"><i
+                                                                    class="fa fa-phone"></i> {{ bed.hospital.hospital_phone }}</p>
+                                                            <p class="card-text text-left  mb-1"><i
+                                                                    class="fa fa-location"></i> {{ bed.hospital.hospital_address }}</p>
+                                                            <p class="card-text text-left  mb-1"><i
+                                                                    class="fa fa-date"></i>
+                                                                Updated 3 hours ago</p>
+                                                            <div class="row available-details ">
+                                                                <div class="col-md-3 d-flex" *ngFor="let sub of bed.resources[0].subtypes">
+                                                                    <div class="bed-details">
+                                                                        <span class="d-block"><i
+                                                                                class="fa fa-bed mr-2"></i> {{ setBedType(sub.type) }} </span>
+                                                                        <span [ngClass]="sub.available ? 'available' : 'not-available'"> {{ sub.available ? 'Available' : 'Not-Available' }} </span>
+                                                                    </div>
+                                                                    <div
+                                                                        class="comments d-flex mt-1 ml-4 align-self-center">
+                                                                        <span class="like mr-1"><i
+                                                                                class="fa fa-thumbs-up"></i> <span
+                                                                                class="d-block">{{ sub.upvote }}</span></span>
+                                                                        <span class="like"><i
+                                                                                class="fa fa-thumbs-down"></i> <span
+                                                                                class="d-block">{{ sub.downvote }}</span></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col align-self-center text-right">
+                                                                    <a class="btn btn-primary p-2 py-1 mr-1"
+                                                                        href="#!">Report Updates</a>
+                                                                    <a class="btn btn-outline-primary p-2 py-1 "
+                                                                        href="#!">Notify Me</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </ng-container>
+
                                                     <!-- card for all start -->
-                                                    <div class="card shadow-sm">
+                                                    <!-- <div class="card shadow-sm">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -386,10 +452,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- card for all end -->
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for all vaccine -->
-                                                    <div class="card shadow-sm mt-2">
+                                                    <!-- <div class="card shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -424,10 +489,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for vaccine end -->
                                                     <!-- card for all vaccine available -->
-                                                    <div class="card shadow-sm mt-2">
+                                                    <!-- <div class="card shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -462,10 +527,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for vaccine available end -->
                                                     <!-- card for all Plasma -->
-                                                    <div class="card shadow-sm mt-2">
+                                                    <!-- <div class="card shadow-sm mt-2">
                                                         <div class="card-body text-left">
                                                             <h5 class="card-title text-left hospital-name">Adilabad
                                                                 Neuro Super Speciality Hospital</h5>
@@ -513,83 +578,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <!-- card for Plasma end -->
 
                                                     <!-- card for all Plasma -->
-                                                    <div class="card shadow-sm mt-2">
-                                                        <div class="card-body text-left">
-                                                            <h5 class="card-title text-left hospital-name">Adilabad
-                                                                Neuro Super Speciality Hospital</h5>
-                                                            <p class="card-text text-left mb-1"><i
-                                                                    class="fa fa-phone"></i> +91 9032628839</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-location"></i> 123 street name,
-                                                                Address line, city, TS, 530002 - India</p>
-                                                            <p class="card-text text-left  mb-1"><i
-                                                                    class="fa fa-date"></i>
-                                                                Updated 3 hours ago</p>
-                                                            <div class="row available-details ">
-                                                                <div class="col-md-3 d-flex">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> Regular
-                                                                            Ber</span>
-                                                                        <span class="available">Available</span>
-                                                                    </div>
-                                                                    <div
-                                                                        class="comments d-flex mt-1 ml-4 align-self-center">
-                                                                        <span class="like mr-1"><i
-                                                                                class="fa fa-thumbs-up"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                        <span class="like"><i
-                                                                                class="fa fa-thumbs-down"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3 d-flex">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> ICU
-                                                                            Bed</span>
-                                                                        <span class="not-available">Not-Available</span>
-                                                                    </div>
-                                                                    <div
-                                                                        class="comments d-flex mt-1 ml-4 align-self-center">
-                                                                        <span class="like mr-1"><i
-                                                                                class="fa fa-thumbs-up"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                        <span class="like"><i
-                                                                                class="fa fa-thumbs-down"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3 d-flex">
-                                                                    <div class="bed-details">
-                                                                        <span class="d-block"><i
-                                                                                class="fa fa-bed mr-2"></i> Oxigen
-                                                                            Bed</span>
-                                                                        <span class="available">Available</span>
-                                                                    </div>
-                                                                    <div
-                                                                        class="comments d-flex mt-1 ml-4 align-self-center">
-                                                                        <span class="like mr-1"><i
-                                                                                class="fa fa-thumbs-up"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                        <span class="like"><i
-                                                                                class="fa fa-thumbs-down"></i> <span
-                                                                                class="d-block">103</span></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-self-center text-right">
-                                                                    <a class="btn btn-primary p-2 py-1 mr-1"
-                                                                        href="#!">Report Updates</a>
-                                                                    <a class="btn btn-outline-primary p-2 py-1 "
-                                                                        href="#!">Notify Me</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                   
                                                     <!-- card for Plasma end -->
                                                 </div>
                                             </div>
