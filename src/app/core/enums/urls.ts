@@ -25,7 +25,8 @@ export const HOSPITAL = {
     HospitalByPinCodeUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitaldatabypin',
     GethospitaldataUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitaldata',
     GethospitalbyidUrl: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/gethospitalbyid',
-    addReport: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/addreport'
+    addReport: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/addreport',
+    updatereport: 'http://normalindiaservice-env.eba-sxmcmnni.us-east-2.elasticbeanstalk.com/updatereport'
     // '../../../assets/Data/ts.json'
 }
 
