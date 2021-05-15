@@ -70,14 +70,15 @@ export class LayoutComponent implements OnInit {
   createReportForm() {
     this.reportForm = this.fb.group({
       name: ['', [Validators.required]],
+      phonenumber: ['', [Validators.required]],
       regularBed: [false, [Validators.required]],
       icuBed: [false, [Validators.required]],
       oxygenBed: [false, [Validators.required]],
-      vaccine: [false, [Validators.required]],
+      // vaccine: [false, [Validators.required]],
       regularBedCount: ['', [Validators.required]],
       icuBedCount: ['', [Validators.required]],
       oxygenBedCount: ['', [Validators.required]],
-      vaccineCount: ['', [Validators.required]],
+      // vaccineCount: ['', [Validators.required]],
       comment: ['']
     });
   }
@@ -293,8 +294,10 @@ export class LayoutComponent implements OnInit {
     if (this.reportForm.invalid) {
       return;
     }
-    this.selectedHospital.comments = this.reportForm.get('comment').value;
+    this.selectedHospital.comments = null
+    //    this.selectedHospital.comments = this.reportForm.get('comment').value;
     this.selectedHospital.name = this.reportForm.get('name').value;
+    this.selectedHospital.phonenumber = this.reportForm.get('phonenumber').value;
     for (let h = 0; h < this.selectedHospital.resources[0].subtypes.length; h++) {
       if (this.selectedHospital.resources[0].subtypes[h].type === 'Normal') {
         this.selectedHospital.resources[0].subtypes[h].available = this.reportForm.get('regularBed').value;
@@ -305,10 +308,11 @@ export class LayoutComponent implements OnInit {
       } else if (this.selectedHospital.resources[0].subtypes[h].type === 'ICU') {
         this.selectedHospital.resources[0].subtypes[h].available = this.reportForm.get('icuBed').value;
         this.selectedHospital.resources[0].subtypes[h].current = this.reportForm.get('icuBedCount').value;
-      } else if (this.selectedHospital.resources[0].subtypes[h].type === 'Vaccine') {
-        this.selectedHospital.resources[0].subtypes[h].available = this.reportForm.get('vaccine').value;
-        this.selectedHospital.resources[0].subtypes[h].current = this.reportForm.get('vaccineCount').value;
       }
+      //  else if (this.selectedHospital.resources[0].subtypes[h].type === 'Vaccine') {
+      //   this.selectedHospital.resources[0].subtypes[h].available = this.reportForm.get('vaccine').value;
+      //   this.selectedHospital.resources[0].subtypes[h].current = this.reportForm.get('vaccineCount').value;
+      // }
     }
     this.commonService.commonApiCall(
       `${HOSPITAL.updatereport}/${this.selectedHospital.hospital.hospital_id}`,
